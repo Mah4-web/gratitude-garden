@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -70,41 +69,6 @@ button[type="submit"]:hover {
   background-color: #66bb6a;
 }
 
-/* 🌼 Filter Bar */
-.filter-bar {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin: 2rem auto;
-  padding: 1rem;
-  border-left: 4px solid #c2f0c2;
-  background-color: #f9fff9;
-  border-radius: 8px;
-  max-width: 500px;
-}
-
-.filter-bar h3 {
-  margin-bottom: 0.5rem;
-  color: #2e7d32;
-  font-size: 1.2rem;
-}
-
-.filter-bar button {
-  background-color: #e6ffe6;
-  border: 1px solid #a3d9a5;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  width: 100%;
-}
-
-.filter-bar button:hover {
-  background-color: #c0ffc0;
-}
-
 /* 🌸 Card Layout */
 .garden-layout {
   display: flex;
@@ -127,34 +91,30 @@ button[type="submit"]:hover {
   animation: bloom 0.4s ease;
   overflow-wrap: break-word;
   font-size: 0.9rem;
-  .flower-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
-}
-
 }
 
 .flower-card.normal-growth {
-  border-color: #a5d6a7; 
+  border-color: #a5d6a7;
   box-shadow: 0 4px 10px rgba(165, 214, 167, 0.3);
-  transform: scale(1); 
+  transform: scale(1);
 }
 
 .flower-card.small-growth {
-  border-color: #81c784; 
+  border-color: #81c784;
   box-shadow: 0 6px 15px rgba(129, 199, 132, 0.5);
-  transform: scale(1.02); 
+  transform: scale(1.02);
 }
 
 .flower-card.medium-growth {
-  border-color: #4caf50; 
+  border-color: #4caf50;
   box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
-  transform: scale(1.04); 
+  transform: scale(1.04);
 }
 
 .flower-card.bloomed {
-  border-color: #2e7d32; /* dark green */
+  border-color: #2e7d32;
   box-shadow: 0 10px 25px rgba(46, 125, 50, 0.8);
-  transform: scale(1.06); 
+  transform: scale(1.06);
   background-color: #e8f5e9;
 }
 
@@ -164,11 +124,9 @@ button[type="submit"]:hover {
   margin-bottom: 10px;
 }
 
-
 .flower-top .emoji {
   font-size: 1.5rem;
 }
-
 
 .flower-card .message {
   font-size: 1rem;
@@ -194,16 +152,47 @@ button[type="submit"]:hover {
   background-color: #ffca28;
 }
 
-/* Like button sunshine glow */
 .like-btn.sunny {
-  background-color: #fff176; /* bright yellow */
+  background-color: #fff176;
   box-shadow: 0 0 12px 3px #fff59d;
+}
+
+/* 📊 Growth Tracker Styles */
+#growth-tracker {
+  margin: 2rem auto;
+  padding: 1.5rem;
+  max-width: 600px;
+  background-color: #f0fff4;
+  border: 2px solid #b2dfdb;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#growth-tracker h2 {
+  font-size: 1.8rem;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+#growth-tracker p {
+  font-size: 1.2rem;
+  color: #388e3c;
+  margin: 0.5rem 0;
+}
+
+#growth-tracker span {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #1b5e20;
+  transition: all 0.3s ease-in-out;
 }
 
 /* 🌟 Notification */
 .notification {
   position: fixed;
-  top: 20px; /* ✅ NOT bottom */
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #d4edda;
