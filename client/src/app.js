@@ -1,9 +1,3 @@
-app.post('/gratitudeWall', async (req, res) => {
-  console.log('POST /gratitudeWall called with:', req.body);
-  // rest of your code
-});
-
-
 const DATABASE_URL = 'https://gratitude-garden.onrender.com';
 
 const gratitudeForm = document.getElementById('gratitudeForm');
@@ -12,12 +6,27 @@ const newSproutsContainer = document.getElementById('newSproutsContainer');
 const topPostsContainer = document.getElementById('topPosts');
 const notification = document.getElementById('notification');
 
-// Notification message (success or error)
-function showNotification(message, isError = false) {
+const successMessages = [
+  "🌱 Your gratitude seed has been planted! Watch it grow!",
+  "🌷 Thanks for planting some positivity!",
+  "🌻 Your message just blossomed in the garden!",
+  "🍃 You’ve just watered a seed of kindness!",
+  "🌿 Your gratitude is taking root—thank you!",
+  "🌸 Another beautiful bloom added to the garden!",
+  "🌼 You’ve helped the garden grow brighter today!"
+];
+
+// Notification message
+function showNotification(isError = false) {
+  const message = isError 
+    ? "❌ Something went wrong. Try again." 
+    : successMessages[Math.floor(Math.random() * successMessages.length)];
+
   notification.textContent = message;
   notification.classList.remove('hidden');
   notification.style.backgroundColor = isError ? '#f8d7da' : '#d4edda';
   notification.style.color = isError ? '#842029' : '#155724';
+
   setTimeout(() => {
     notification.classList.add('hidden');
   }, 3000);
@@ -35,24 +44,24 @@ gratitudeForm.addEventListener('submit', async event => {
   };
 
   try {
-    const res = await fetch(`${DATABASE_URL}/gratitudeWall`, {
+    const res = await fetch(`${DATABASE_URL}/gratitudewall`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ formValues }),
     });
 
     if (res.ok) {
-      showNotification('🌷 Your gratitude message was planted!');
+      showNotification();
       gratitudeForm.reset();
       await loadPosts();
       await loadNewSprouts();
       await loadStats();
     } else {
-      showNotification('❌ Something went wrong. Try again.', true);
+      showNotification(true);
     }
   } catch (error) {
     console.error('Error submitting form:', error);
-    showNotification('❌ Network error. Please try again.', true);
+    showNotification(true);
   }
 });
 
@@ -114,7 +123,7 @@ const renderPosts = (posts, container) => {
       card.querySelector('.flower-image').textContent = getPlantEmoji(count);
 
       try {
-        const res = await fetch(`${DATABASE_URL}/gratitudeWall/${likeBtn.getAttribute('data-post')}/like`, {
+        const res = await fetch(`${DATABASE_URL}/gratitudewall/${likeBtn.getAttribute('data-post')}/like`, {
           method: 'POST',
         });
         if (!res.ok) throw new Error('Failed to like message');
@@ -130,7 +139,7 @@ const renderPosts = (posts, container) => {
         card.classList.add(getGrowthClass(count));
         card.querySelector('.flower-image').textContent = getPlantEmoji(count);
 
-        showNotification('❌ Could not give sunshine. Try again.', true);
+        showNotification(true);
       }
     });
 
@@ -141,7 +150,7 @@ const renderPosts = (posts, container) => {
 // Load all posts (Garden Wall)
 async function loadPosts() {
   try {
-    const res = await fetch(`${DATABASE_URL}/gratitudeWall`);
+    const res = await fetch(`${DATABASE_URL}/gratitudewall`);
     if (!res.ok) throw new Error('Failed to load posts');
     const posts = await res.json();
     renderPosts(posts, postContainer);
@@ -153,7 +162,7 @@ async function loadPosts() {
 // Load new sprouts (recent posts)
 async function loadNewSprouts() {
   try {
-    const res = await fetch(`${DATABASE_URL}/gratitudeWall?limit=5&sort=desc`); // or your backend endpoint for recent posts
+    const res = await fetch(`${DATABASE_URL}/gratitudewall?limit=5&sort=desc`); // Or your backend endpoint for recent posts
     if (!res.ok) throw new Error('Failed to load new sprouts');
     const posts = await res.json();
     renderPosts(posts, newSproutsContainer);
