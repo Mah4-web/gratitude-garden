@@ -1,10 +1,12 @@
+const DATABASE_URL = 'https://gratitude-garden.onrender.com';
+
 const gratitudeForm = document.getElementById('gratitudeForm');
 const postContainer = document.getElementById('postContainer');
 const newSproutsContainer = document.getElementById('newSproutsContainer');
 const topPostsContainer = document.getElementById('topPosts');
 const notification = document.getElementById('notification');
 
-// Show notification message (success or error)
+// Notification message (success or error)
 function showNotification(message, isError = false) {
   notification.textContent = message;
   notification.classList.remove('hidden');
@@ -27,7 +29,7 @@ gratitudeForm.addEventListener('submit', async event => {
   };
 
   try {
-    const res = await fetch('https://gratitude-garden.onrender.com', {
+    const res = await fetch(`${DATABASE_URL}/gratitudeWall`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ formValues }),
@@ -48,7 +50,7 @@ gratitudeForm.addEventListener('submit', async event => {
   }
 });
 
-// Helper: Get plant emoji based on likes count
+// Plant emoji based on likes count
 function getPlantEmoji(likes) {
   if (likes >= 10) return '🌼';
   if (likes >= 5) return '🌸';
@@ -56,7 +58,7 @@ function getPlantEmoji(likes) {
   return '🌱';
 }
 
-// Helper: Get growth class based on likes count
+// Growth class based on likes count
 function getGrowthClass(likes) {
   if (likes >= 10) return 'bloomed';
   if (likes >= 5) return 'medium-growth';
@@ -73,7 +75,7 @@ const renderPosts = (posts, container) => {
     const card = document.createElement('article');
     card.classList.add('flower-card');
 
-    // Add initial growth class based on likes
+    // Growth class based on likes
     card.classList.add(getGrowthClass(post.likes));
 
     card.innerHTML = `
@@ -106,7 +108,7 @@ const renderPosts = (posts, container) => {
       card.querySelector('.flower-image').textContent = getPlantEmoji(count);
 
       try {
-        const res = await fetch(`https://gratitude-garden.onrender.com/${likeBtn.getAttribute('data-post')}/like`, {
+        const res = await fetch(`${DATABASE_URL}/gratitudeWall/${likeBtn.getAttribute('data-post')}/like`, {
           method: 'POST',
         });
         if (!res.ok) throw new Error('Failed to like message');
@@ -133,7 +135,7 @@ const renderPosts = (posts, container) => {
 // Load all posts (Garden Wall)
 async function loadPosts() {
   try {
-    const res = await fetch('https://gratitude-garden.onrender.com/gratitudeWall');
+    const res = await fetch(`${DATABASE_URL}/gratitudeWall`);
     if (!res.ok) throw new Error('Failed to load posts');
     const posts = await res.json();
     renderPosts(posts, postContainer);
@@ -145,7 +147,7 @@ async function loadPosts() {
 // Load new sprouts (recent posts)
 async function loadNewSprouts() {
   try {
-    const res = await fetch('https://gratitude-garden.onrender.com/new-sprouts');
+    const res = await fetch(`${DATABASE_URL}/gratitudeWall?limit=5&sort=desc`); // or your backend endpoint for recent posts
     if (!res.ok) throw new Error('Failed to load new sprouts');
     const posts = await res.json();
     renderPosts(posts, newSproutsContainer);
@@ -157,7 +159,7 @@ async function loadNewSprouts() {
 // Load garden stats (Growth Tracker)
 async function loadStats() {
   try {
-    const res = await fetch('https://gratitude-garden.onrender.com/stats');
+    const res = await fetch(`${DATABASE_URL}/stats`);
     if (!res.ok) throw new Error('Failed to load stats');
     const stats = await res.json();
     document.getElementById('msgCount').textContent = stats.messages;
