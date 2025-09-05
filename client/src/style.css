@@ -203,16 +203,20 @@ button[type="submit"]:hover {
 /* 🌟 Notification */
 .notification {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #c8e6c9;
-  color: #2e7d32;
-  padding: 12px 20px;
+  top: 20px; /* ✅ NOT bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #d4edda;
+  color: #155724;
+  padding: 15px 25px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  font-size: 1rem;
+  font-weight: bold;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .notification.show {
@@ -220,9 +224,8 @@ button[type="submit"]:hover {
   pointer-events: auto;
 }
 
-.notification.hidden {
-  opacity: 0;
-  pointer-events: none;
+.hidden {
+  display: none;
 }
 
 /* 🌿 General Section Layout */

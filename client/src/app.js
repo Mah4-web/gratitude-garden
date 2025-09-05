@@ -24,13 +24,16 @@ function showNotification(isError = false) {
 
   notification.textContent = message;
   notification.classList.remove('hidden');
+  notification.classList.add('show');
   notification.style.backgroundColor = isError ? '#f8d7da' : '#d4edda';
   notification.style.color = isError ? '#842029' : '#155724';
 
   setTimeout(() => {
+    notification.classList.remove('show');
     notification.classList.add('hidden');
   }, 3000);
 }
+
 
 // Handle form submission
 gratitudeForm.addEventListener('submit', async event => {
