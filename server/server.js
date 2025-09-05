@@ -66,3 +66,8 @@ app.get('/stats', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch stats' });
   }
 });
+
+// Root route to verify server is live
+app.get('/', (req, res) => {
+  res.send('🌱 Gratitude Wall API is live!');
+});

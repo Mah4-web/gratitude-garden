@@ -27,7 +27,7 @@ gratitudeForm.addEventListener('submit', async event => {
   };
 
   try {
-    const res = await fetch('http://localhost:2025/gratitudeWall', {
+    const res = await fetch('https://gratitude-garden.onrender.com', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ formValues }),
@@ -106,7 +106,7 @@ const renderPosts = (posts, container) => {
       card.querySelector('.flower-image').textContent = getPlantEmoji(count);
 
       try {
-        const res = await fetch(`http://localhost:2025/gratitudeWall/${likeBtn.getAttribute('data-post')}/like`, {
+        const res = await fetch(`https://gratitude-garden.onrender.com/${likeBtn.getAttribute('data-post')}/like`, {
           method: 'POST',
         });
         if (!res.ok) throw new Error('Failed to like message');
@@ -133,7 +133,7 @@ const renderPosts = (posts, container) => {
 // Load all posts (Garden Wall)
 async function loadPosts() {
   try {
-    const res = await fetch('http://localhost:2025/gratitudeWall');
+    const res = await fetch('https://gratitude-garden.onrender.com/gratitudeWall');
     if (!res.ok) throw new Error('Failed to load posts');
     const posts = await res.json();
     renderPosts(posts, postContainer);
@@ -145,7 +145,7 @@ async function loadPosts() {
 // Load new sprouts (recent posts)
 async function loadNewSprouts() {
   try {
-    const res = await fetch('http://localhost:2025/new-sprouts');
+    const res = await fetch('https://gratitude-garden.onrender.com/new-sprouts');
     if (!res.ok) throw new Error('Failed to load new sprouts');
     const posts = await res.json();
     renderPosts(posts, newSproutsContainer);
@@ -157,7 +157,7 @@ async function loadNewSprouts() {
 // Load garden stats (Growth Tracker)
 async function loadStats() {
   try {
-    const res = await fetch('http://localhost:2025/stats');
+    const res = await fetch('https://gratitude-garden.onrender.com/stats');
     if (!res.ok) throw new Error('Failed to load stats');
     const stats = await res.json();
     document.getElementById('msgCount').textContent = stats.messages;
