@@ -1,5 +1,231 @@
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background: #fff9c4;
+  font-family: 'Open Sans', sans-serif;
+  color: #2d3436;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+/* 🌿 Header & Footer */
+header, footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #ecf5b6;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-family: playfair display, serif;
+}
+
+footer p {
+  color: #555;
+}
+
+/* 🌱 Form Section */
+.garden-form {
+  background-color: #ffffffcc;
+  border: 2px solid #c8e6c9;
+  padding: 20px;
+  max-width: 550px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(60, 179, 113, 0.2);
+}
+
+.garden-form input,
+.garden-form textarea,
+.garden-form select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #aed581;
+  border-radius: 6px;
+}
+
+button[type="submit"] {
+  background-color: #81c784;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #66bb6a;
+}
+
+/* 🌼 Filter Bar */
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  border-left: 4px solid #c2f0c2;
+  background-color: #f9fff9;
+  border-radius: 8px;
+  max-width: 500px;
+}
+
+.filter-bar h3 {
+  margin-bottom: 0.5rem;
+  color: #2e7d32;
+  font-size: 1.2rem;
+}
+
+.filter-bar button {
+  background-color: #e6ffe6;
+  border: 1px solid #a3d9a5;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.filter-bar button:hover {
+  background-color: #c0ffc0;
+}
+
+/* 🌸 Card Layout */
+.garden-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* 🌼 Flower Card */
+.flower-card {
+  background-color: #ffffffdd;
+  border: 2px solid #c5e1a5;
+  border-radius: 12px;
+  padding: 15px;
+  width: 280px;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: bloom 0.4s ease;
+  overflow-wrap: break-word;
+  font-size: 0.9rem;
+  .flower-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+}
+
+.flower-card.normal-growth {
+  border-color: #a5d6a7; 
+  box-shadow: 0 4px 10px rgba(165, 214, 167, 0.3);
+  transform: scale(1); 
+}
+
+.flower-card.small-growth {
+  border-color: #81c784; 
+  box-shadow: 0 6px 15px rgba(129, 199, 132, 0.5);
+  transform: scale(1.02); 
+}
+
+.flower-card.medium-growth {
+  border-color: #4caf50; 
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+  transform: scale(1.04); 
+}
+
+.flower-card.bloomed {
+  border-color: #2e7d32; /* dark green */
+  box-shadow: 0 10px 25px rgba(46, 125, 50, 0.8);
+  transform: scale(1.06); 
+  background-color: #e8f5e9;
+}
+
+.flower-image {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+.flower-top .emoji {
+  font-size: 1.5rem;
+}
+
+
+.flower-card .message {
+  font-size: 1rem;
+  margin: 10px 0;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+/* ☀️ Like Button */
+.like-btn {
+  margin-top: 10px;
+  background-color: #ffd54f;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.like-btn:hover {
+  background-color: #ffca28;
+}
+
+/* Like button sunshine glow */
+.like-btn.sunny {
+  background-color: #fff176; /* bright yellow */
+  box-shadow: 0 0 12px 3px #fff59d;
+}
+
+/* 🌟 Notification */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #c8e6c9;
+  color: #2e7d32;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.notification.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.notification.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 🌿 General Section Layout */
+section {
+  margin-top: 2rem;
 }

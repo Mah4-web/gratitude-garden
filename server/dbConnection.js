@@ -14,9 +14,6 @@ const dbConnectionString = process.env.DATABASE_URL;
 
 //set up a pool
 
-const pool = new pg.Pool({
- 
-
 export const db = new pg.Pool({
-  connectionString: dbConnectionString,
+    connectionString: dbConnectionString,
 });
