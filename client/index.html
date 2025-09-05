@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/app.js" defer></script>
+    <link rel="stylesheet" href="./src/style.css">
+    <title>🌱 Gratitude Garden</title>
+  </head>
+  <body>
+    <form id="gratitudeForm">
+      <h1>🌱 Gratitude Garden - A Public Appreciation Wall </h1>
+      <h2>🌱 Plant a New Seed of Gratitude</h2>
+
+    <label for="name">Your Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label for="message">Message:</label><br>
+    <textarea  name="message" required maxlength="300"></textarea><br><br>
+
+    <label for="emoji">Choose an Emoji:</label><br>
+    <select  name="emoji">
+    <option value="">None</option>
+    <option value="🌻">🌻 Happy</option>
+    <option value="🌧️">🌧️ Supportive</option>
+    <option value="💪">💪 Motivation</option>
+    <option value="💖">💖 Appreciation</option>
+    <option value="🌸">🌸 Gratitude</option>
+  </select><br><br>
+
+    <label for="mood_tag">Mood Tag:</label><br>
+    <input type="text"  name="mood_tag" placeholder="e.g., Happy, Motivated"><br><br>
+
+    <button type="submit">🌼 Grow Message</button>
+</form>
+
+    
+  </body>
+</html>
