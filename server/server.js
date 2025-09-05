@@ -13,9 +13,9 @@ app.listen(PORT, () => {
 });
 
 // GET all posts
-app.get('/gratitudeWall', async (req, res) => {
+app.get('/gratitudewall', async (req, res) => {
   try {
-    const result = await db.query('SELECT * FROM gratitudeWall ORDER BY created_at DESC;');
+    const result = await db.query('SELECT * FROM gratitudewall ORDER BY created_at DESC;');
     res.json(result.rows);
   } catch (err) {
     console.error('GET error:', err);
@@ -24,11 +24,11 @@ app.get('/gratitudeWall', async (req, res) => {
 });
 
 // POST new gratitude message
-app.post('/gratitudeWall', async (req, res) => {
+app.post('/gratitudewall', async (req, res) => {
   const { name, message, emoji, mood_tag } = req.body.formValues;
   try {
     const result = await db.query(
-      `INSERT INTO gratitudeWall (name, message, emoji, mood_tag, likes)
+      `INSERT INTO gratitudewall (name, message, emoji, mood_tag, likes)
        VALUES ($1, $2, $3, $4, 0) RETURNING *`,
       [name, message, emoji, mood_tag]
     );
@@ -56,8 +56,8 @@ app.post('/gratitudeWall/:id/like', async (req, res) => {
 // Stats
 app.get('/stats', async (req, res) => {
   try {
-    const count = await db.query('SELECT COUNT(*) FROM gratitudeWall');
-    const likes = await db.query('SELECT SUM(likes) FROM gratitudeWall');
+    const count = await db.query('SELECT COUNT(*) FROM gratitudewall');
+    const likes = await db.query('SELECT SUM(likes) FROM gratitudewall');
     res.json({
       messages: count.rows[0].count,
       likes: likes.rows[0].sum || 0,

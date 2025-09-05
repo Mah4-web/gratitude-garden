@@ -1,3 +1,9 @@
+app.post('/gratitudeWall', async (req, res) => {
+  console.log('POST /gratitudeWall called with:', req.body);
+  // rest of your code
+});
+
+
 const DATABASE_URL = 'https://gratitude-garden.onrender.com';
 
 const gratitudeForm = document.getElementById('gratitudeForm');
