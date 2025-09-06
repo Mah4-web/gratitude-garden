@@ -77,20 +77,37 @@ Throughout Gratitude Garden’s development, I gained deep insights into full-st
 
 ### 🚧 Challenges I Faced
 
-* **Styling and Layout**
-  Positioning emojis and flowers visually pleasingly and responsively
-  Scaling flower sizes smoothly from sprout to bloom
+* **Styling & Layout**
 
-* **Complex Requirements**
-  Managing multiple UI states (all posts, new sprouts, top posts)
-  Keeping frontend state synchronized with backend data (likes, deletions)
+* Designed a responsive, visually pleasing garden UI.
 
-* **JavaScript Functionality**
-  Organizing asynchronous code and event handlers for maintainability
-  Handling optimistic UI updates with rollback on backend errors
+* Smooth scaling animations for flower growth stages.
 
-* **Feature Completeness vs Time**
-  Balancing adding all features with clean code and responsive design
+* Styling was time-consuming; synchronization of all elements was challenging.
+
+* Corrected spelling and consistency errors.
+
+* **Complex UI Management**
+
+* Handled multiple UI states: all posts, new sprouts, and top posts.
+
+* Synchronized frontend state with backend data for likes and deletions.
+
+* **JavaScript Enhancements**
+
+* Organized asynchronous code and event handlers for clarity.
+
+* Implemented optimistic UI updates with rollback on errors.
+
+* **Backend & Data Fixes**
+
+* Fixed SQL date/time issues that caused incorrect timestamps.
+
+* Resolved post overlapping by improving layout and rendering logic.
+
+* **Feature & Time Balance**
+
+* Balanced feature completeness with clean, responsive design.
 
 ---
 
