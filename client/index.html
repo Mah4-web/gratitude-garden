@@ -5,94 +5,98 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="/src/app.js" defer></script>
-    <link rel="stylesheet" href="./src/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
     <title>🌱 Gratitude Garden</title>
   </head>
   <body>
-    
- <header>
-    <h1>🌱 Gratitude Garden - A Public Appreciation Wall</h1>
-  </header>
+    <header>
+      <h1>🌱 Gratitude Garden - A Public Appreciation Wall</h1>
+    </header>
 
-  <main>
-    <!-- 🌱 Form Section -->
-    <section class="form-section">
-      <form id="gratitudeForm" class="garden-form">
-        <h2>🌱 Plant a New Seed of Gratitude</h2>
-    <label for="name">Your Name:</label><br>
-    <input type="text" name="name" required><br><br>
+    <main>
+      <!-- 🌿 Form + Growth Tracker Wrapper -->
+      <section class="form-growth-wrapper">
+        <!-- 🌱 Form Section -->
+        <form id="gratitudeForm" class="garden-form">
+          <h2>🌱 Plant a New Seed of Gratitude</h2>
+          <label for="name">Your Name:</label><br />
+          <input type="text" name="name" required /><br /><br />
 
-    <label for="message">Message:</label><br>
-    <textarea  name="message" required maxlength="300"></textarea><br><br>
+          <label for="message">Message:</label><br />
+          <textarea name="message" required maxlength="300"></textarea
+          ><br /><br />
 
-    <label for="emoji">Choose an Emoji:</label><br>
-    <select  name="emoji">
-    <option value="">None</option>
-    <option value="🌻">🌻 Happy</option>
-    <option value="🌧️">🌧️ Supportive</option>
-    <option value="💪">💪 Motivation</option>
-    <option value="💖">💖 Appreciation</option>
-    <option value="🌸">🌸 Gratitude</option>
-    <option value="🌞">🌞 Positivity</option>
-    <option value="🍀">🍀 Good Luck</option>
-    <option value="🎉">🎉 Celebration</option>
-    <option value="✨">✨ Encouragement</option>
-    <option value="☀️">☀️ Bright Moments</option>
-    <option value="🌈">🌈 Hope</option>
-    <option value="🔥">🔥 Inspiration</option>
-    <option value="🎈">🎈 Joy</option>
-    
+          <label for="emoji">Choose an Emoji:</label><br />
+          <select name="emoji">
+            <option value="">None</option>
+            <option value="🌻">🌻 Happy</option>
+            <option value="🌧️">🌧️ Supportive</option>
+            <option value="💪">💪 Motivation</option>
+            <option value="💖">💖 Appreciation</option>
+            <option value="🌸">🌸 Gratitude</option>
+            <option value="🌞">🌞 Positivity</option>
+            <option value="🍀">🍀 Good Luck</option>
+            <option value="🎉">🎉 Celebration</option>
+            <option value="✨">✨ Encouragement</option>
+            <option value="☀️">☀️ Bright Moments</option>
+            <option value="🌈">🌈 Hope</option>
+            <option value="🔥">🔥 Inspiration</option>
+            <option value="🎈">🎈 Joy</option>
+          </select>
+          <br /><br />
 
-  </select><br><br>
+          <label for="mood_tag">Mood Tag:</label><br />
+          <input
+            type="text"
+            name="mood_tag"
+            placeholder="e.g., Happy, Motivated"
+          /><br /><br />
 
-    <label for="mood_tag">Mood Tag:</label><br>
-    <input type="text"  name="mood_tag" placeholder="e.g., Happy, Motivated"><br><br>
+          <button type="submit">🌼 Grow Message</button>
+        </form>
 
-    <button type="submit">🌼 Grow Message</button>
-</form>
- </form>
-    
-    <!-- 📊 Growth Tracker -->
-    <section id="growth-tracker">
-      <h2>📊 Garden Growth Tracker</h2>
-      <p>🪴 Messages Planted: <span id="msgCount">0</span></p>
-      <p>🌟 Likes Given: <span id="likeCount">0</span></p>
-    </section>
+        <!-- 📊 Growth Tracker -->
+        <section id="growth-tracker">
+          <h2> 🌳 Garden Growth 📊 Tracker </h2>
+            <p>🌟 🌱 🍃 🌿 🪴 🪻🌸 🌼</p>
+          <p>
+            🪴 Messages Planted: <span id="msgCount">0</span>
+          </p>
+          <p>
+            💕 Likes Given: <span id="likeCount">0</span>
+          </p>
+        </section>
+      </section>
 
-    </section>
+      <!-- 💕 Most Loved -->
+      <section id="most-loved">
+        <h2>🌟 Most Loved</h2>
+        <div class="garden-layout" id="topPosts"></div>
+      </section>
 
-    <!-- 💕 Most Loved -->
-    <section id="most-loved">
-      <h2>🌟 Most Loved</h2>
-      <div class="garden-layout" id="topPosts"></div>
-    </section>
-    
-    <!-- 🌱 All Posts -->
-    <section>
-      <h2>🌸 Garden Wall</h2>
-      <div class="garden-layout" id="postContainer"></div>
-    </section>
+      <!-- 🌱 All Posts -->
+      <section>
+        <h2>🌸 Garden Wall</h2>
+        <div class="garden-layout" id="postContainer"></div>
+      </section>
 
-    <!--  New Sprouts -->
-    <section id="new-sprouts">
-      <h2> New Sprouts</h2>
-      <div class="garden-layout" id="newSproutsContainer"></div>
-    </section>
+      <!-- New Sprouts -->
+      <section id="new-sprouts">
+        <h2>New Sprouts</h2>
+        <div class="garden-layout" id="newSproutsContainer"></div>
+      </section>
+    </main>
 
-    
-  </main>
     <div id="notification" class="notification hidden"></div>
 
-<footer>
-    <p>Developed by 🌟 Mahpara</p>
-  </footer>
-    
+    <footer>
+      <p>Developed by 🌟 Mahpara</p>
+    </footer>
   </body>
 </html>
-
-
-

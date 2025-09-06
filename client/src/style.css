@@ -1,3 +1,4 @@
+/* 🌿 Base Reset */
 * {
   margin: 0;
   padding: 0;
@@ -18,29 +19,40 @@ h1, h2, h3 {
   margin-bottom: 10px;
 }
 
-/* 🌿 Header & Footer */
+/* 🌱 Header & Footer */
 header, footer {
   text-align: center;
   padding: 1rem;
   background-color: #ecf5b6;
   border-radius: 10px;
   margin-bottom: 20px;
-  font-family: playfair display, serif;
+  font-family: 'Playfair Display', serif;
 }
 
 footer p {
   color: #555;
 }
 
-/* 🌱 Form Section */
+/* 🌿 Form and Tracker wrapper  */
+.form-growth-wrapper {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap; /* responsive wrap */
+  margin-bottom: 2rem;
+  align-items: center;  
+}
+
+/* 🌸 Form Section */
 .garden-form {
   background-color: #ffffffcc;
   border: 2px solid #c8e6c9;
   padding: 20px;
   max-width: 550px;
-  margin: 0 auto;
+  width: 100%;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(60, 179, 113, 0.2);
+  box-sizing: border-box;
 }
 
 .garden-form input,
@@ -69,7 +81,40 @@ button[type="submit"]:hover {
   background-color: #66bb6a;
 }
 
-/* 🌸 Card Layout */
+/* 📊 Growth Tracker */
+#growth-tracker {
+  padding: 1.5rem;
+  max-width: 300px;
+  width: 100%;
+  background-color: #f0fff4;
+  border: 2px solid #b2dfdb;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+}
+
+#growth-tracker h2 {
+  font-size: 1.8rem;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+#growth-tracker p {
+  font-size: 1.2rem;
+  color: #388e3c;
+  margin: 0.5rem 0;
+}
+
+#growth-tracker span {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #1b5e20;
+  transition: all 0.3s ease-in-out;
+}
+
+/* 🌼 Garden Layout */
 .garden-layout {
   display: flex;
   flex-wrap: wrap;
@@ -84,41 +129,85 @@ button[type="submit"]:hover {
   border: 2px solid #c5e1a5;
   border-radius: 12px;
   padding: 15px;
-  width: 280px;
+  width: 250px;
   max-width: 100%;
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: bloom 0.4s ease;
+  transition: all 0.3s ease-in-out;
   overflow-wrap: break-word;
   font-size: 0.9rem;
   position: relative;
+  animation: fadeIn 0.3s ease;
 }
 
-.flower-card.normal-growth {
-  border-color: #a5d6a7;
-  box-shadow: 0 4px 10px rgba(165, 214, 167, 0.3);
-  transform: scale(1);
+/* 🌿 Growth stages using width + padding */
+.flower-card.seedling {
+  width: 240px;
+  padding: 15px;
 }
 
 .flower-card.small-growth {
-  border-color: #81c784;
-  box-shadow: 0 6px 15px rgba(129, 199, 132, 0.5);
-  transform: scale(1.02);
+  width: 260px;
+  padding: 16px;
+}
+
+.flower-card.little-big {
+  width: 275px;
+  padding: 18px;
 }
 
 .flower-card.medium-growth {
-  border-color: #4caf50;
-  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
-  transform: scale(1.04);
+  width: 290px;
+  padding: 20px;
+}
+
+.flower-card.medium-large {
+  width: 310px;
+  padding: 22px;
+}
+
+.flower-card.large-growth {
+  width: 330px;
+  padding: 24px;
 }
 
 .flower-card.bloomed {
-  border-color: #2e7d32;
-  box-shadow: 0 10px 25px rgba(46, 125, 50, 0.8);
-  transform: scale(1.06);
+  width: 350px;
+  padding: 26px;
   background-color: #e8f5e9;
+  border-color: #2e7d32;
 }
 
+/* 🌸 Dramatic bloom animation */
+@keyframes dramaticBloom {
+  0% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 rgba(76, 175, 80, 0);
+  }
+  30% {
+    transform: scale(1.08) rotate(-1deg);
+    box-shadow: 0 0 25px rgba(76, 175, 80, 0.3);
+  }
+  60% {
+    transform: scale(1.12) rotate(1deg);
+    box-shadow: 0 0 35px rgba(46, 125, 50, 0.4);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+/* Apply animation to all growth levels */
+.flower-card.seedling,
+.flower-card.small-growth,
+.flower-card.little-big,
+.flower-card.medium-growth,
+.flower-card.medium-large,
+.flower-card.large-growth,
+.flower-card.bloomed {
+  animation: dramaticBloom 0.6s ease-in-out;
+}
+
+/* 🌻 Flower Content */
 .flower-image {
   font-size: 3rem;
   text-align: center;
@@ -134,6 +223,15 @@ button[type="submit"]:hover {
   margin: 10px 0;
   word-wrap: break-word;
   white-space: normal;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  text-align: right;
+  font-style: italic;
 }
 
 /* ☀️ Like Button */
@@ -156,38 +254,6 @@ button[type="submit"]:hover {
 .like-btn.sunny {
   background-color: #fff176;
   box-shadow: 0 0 12px 3px #fff59d;
-}
-
-/* 📊 Growth Tracker Styles */
-#growth-tracker {
-  margin: 2rem auto;
-  padding: 1.5rem;
-  max-width: 600px;
-  background-color: #f0fff4;
-  border: 2px solid #b2dfdb;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-#growth-tracker h2 {
-  font-size: 1.8rem;
-  color: #2e7d32;
-  margin-bottom: 1rem;
-}
-
-#growth-tracker p {
-  font-size: 1.2rem;
-  color: #388e3c;
-  margin: 0.5rem 0;
-}
-
-#growth-tracker span {
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: #1b5e20;
-  transition: all 0.3s ease-in-out;
 }
 
 /* 🌟 Notification */
@@ -218,11 +284,7 @@ button[type="submit"]:hover {
   display: none;
 }
 
-/* 🌿 General Section Layout */
-section {
-  margin-top: 2rem;
-}
-
+/* ✂️ Delete Button */
 .delete-btn {
   position: absolute;
   top: 8px;
@@ -231,28 +293,71 @@ section {
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
-  color: #d32f2f; /* red */
+  color: #d32f2f;
   transition: color 0.3s ease;
 }
 
 .delete-btn:hover {
-  color: #b71c1c; /* darker red */
+  color: #b71c1c;
 }
 
-
-/* Fade-out animation on delete */
+/* 💨 Fade-out on delete */
 .flower-card.fade-out {
   opacity: 0;
   transform: scale(0.9);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Date styling */
-.date {
-  font-size: 0.8rem;
-  color: #777;
-  margin-top: -10px;
-  margin-bottom: 10px;
-  text-align: right;
-  font-style: italic;
+/* 🌱 Section spacing */
+section {
+  margin-top: 2rem;
+}
+
+/* Optional: subtle fade-in when loaded */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🌿 Stat Number Count Animation */
+@keyframes growStat {
+  0% {
+    transform: scale(1);
+    color: #2e7d32;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #66bb6a;
+  }
+  100% {
+    transform: scale(1);
+    color: #2e7d32;
+  }
+}
+
+.stat-animate {
+  animation: growStat 0.5s ease-in-out;
+}
+
+/* 🌼 Pulse effect on tracker box */
+@keyframes pulseBox {
+  0% {
+    box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+  }
+}
+
+.tracker-pulse {
+  animation: pulseBox 1s ease-out;
 }

@@ -12,10 +12,17 @@ app.listen(PORT, () => {
   console.log(`🌱 Server is running on port ${PORT}`);
 });
 
-// GET all posts
+// ✅ Enhanced GET all posts with sorting + limiting support
 app.get('/gratitudewall', async (req, res) => {
+  const sort = req.query.sort === 'likes' ? 'likes DESC' : 'created_at DESC';
+  const limit = req.query.limit ? parseInt(req.query.limit, 10) : null;
+
   try {
-    const result = await db.query('SELECT * FROM gratitudewall ORDER BY created_at DESC;');
+    const baseQuery = `SELECT * FROM gratitudewall ORDER BY ${sort}`;
+    const query = limit ? `${baseQuery} LIMIT $1` : baseQuery;
+    const values = limit ? [limit] : [];
+
+    const result = await db.query(query, values);
     res.json(result.rows);
   } catch (err) {
     console.error('GET error:', err);

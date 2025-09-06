@@ -6,6 +6,17 @@ const newSproutsContainer = document.getElementById('newSproutsContainer');
 const topPostsContainer = document.getElementById('topPosts');
 const notification = document.getElementById('notification');
 
+// 🌱 Animated stat update
+function animateStatChange(element, newValue) {
+  if (element.textContent !== String(newValue)) {
+    element.textContent = newValue;
+    element.classList.remove('stat-animate');
+    void element.offsetWidth;
+    element.classList.add('stat-animate');
+  }
+}
+
+// 🌿 Notification system
 const successMessages = [
   "🌱 Your gratitude seed has been planted! Watch it grow!",
   "🌷 Thanks for planting some positivity!",
@@ -16,7 +27,6 @@ const successMessages = [
   "🌼 You’ve helped the garden grow brighter today!"
 ];
 
-// Notification message
 function showNotification(isError = false, customMessage = '') {
   const message = customMessage || (isError
     ? "❌ Something went wrong. Try again."
@@ -35,7 +45,7 @@ function showNotification(isError = false, customMessage = '') {
   }, 3000);
 }
 
-// Handle form submission
+// 🌻 Form Submission
 gratitudeForm.addEventListener('submit', async event => {
   event.preventDefault();
 
@@ -68,22 +78,28 @@ gratitudeForm.addEventListener('submit', async event => {
   }
 });
 
-// Plant emoji based on likes count
+// 🌿 Emoji & Growth Class
 function getPlantEmoji(likes) {
-  if (likes >= 10) return '🌼';
-  if (likes >= 5) return '🌸';
+  if (likes >= 30) return '🌼';
+  if (likes >= 20) return '🌸';
+  if (likes >= 15) return '🪻';
+  if (likes >= 10) return '🪴';
+  if (likes >= 5) return '🌿';
   if (likes >= 1) return '🍃';
   return '🌱';
 }
 
-// Growth class based on likes count
 function getGrowthClass(likes) {
-  if (likes >= 10) return 'bloomed';
-  if (likes >= 5) return 'medium-growth';
+  if (likes >= 30) return 'bloomed';
+  if (likes >= 20) return 'large-growth';
+  if (likes >= 15) return 'medium-large';
+  if (likes >= 10) return 'medium-growth';
+  if (likes >= 5) return 'little-big';
   if (likes >= 1) return 'small-growth';
-  return 'normal-growth';
+  return 'seedling';
 }
 
+// 🌸 Render Posts
 const renderPosts = (posts, container) => {
   container.innerHTML = '';
   posts.forEach(post => {
@@ -93,27 +109,19 @@ const renderPosts = (posts, container) => {
     card.classList.add('flower-card', getGrowthClass(post.likes));
     card.style.position = 'relative';
 
-    // Format the created_at date nicely
     const createdDate = new Date(post.created_at);
-    console.log('Raw created_at:', post.created_at);
-    console.log('Parsed date:', createdDate);
-
-    let formattedDate;
-    if (isNaN(createdDate)) {
-      console.warn('Invalid date detected!');
-      formattedDate = 'Unknown date';
-    } else {
-      formattedDate = createdDate.toLocaleString(undefined, {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-    }
+    const formattedDate = isNaN(createdDate)
+      ? 'Unknown date'
+      : createdDate.toLocaleString(undefined, {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
 
     card.innerHTML = `
-      <button class="delete-btn" data-id="${post.id}" title="Delete this message" aria-label="Delete message">✖️</button>
+      <button class="delete-btn" data-id="${post.id}" title="Delete this message">✖️</button>
       <div class="flower-image">${plantEmoji}</div>
       <div class="flower-top">
         <span class="emoji">${post.emoji || '🌱'}</span>
@@ -121,25 +129,20 @@ const renderPosts = (posts, container) => {
       </div>
       <p class="message">${post.message}</p>
       <div class="date">${formattedDate}</div>
-      <button class="like-btn" data-post="${post.id}" title="Click to spread some sunshine!">
+      <button class="like-btn" data-post="${post.id}">
         ☀️ Give Sunshine (<span class="like-count">${post.likes}</span>)
       </button>
     `;
 
-    // Like button click handler
     const likeBtn = card.querySelector('.like-btn');
     likeBtn.addEventListener('click', async () => {
       const countSpan = likeBtn.querySelector('.like-count');
       let count = parseInt(countSpan.textContent, 10);
       count++;
-
-      // Update UI immediately
       countSpan.textContent = count;
       likeBtn.classList.add('sunny');
 
-      // Update growth class and plant emoji
-      card.classList.remove('normal-growth', 'small-growth', 'medium-growth', 'bloomed');
-      card.classList.add(getGrowthClass(count));
+      card.className = 'flower-card ' + getGrowthClass(count);
       card.querySelector('.flower-image').textContent = getPlantEmoji(count);
 
       try {
@@ -147,30 +150,23 @@ const renderPosts = (posts, container) => {
           method: 'POST',
         });
         if (!res.ok) throw new Error('Failed to like message');
+        await loadStats();
       } catch (error) {
         console.error(error);
-        // Revert UI on error
         count--;
         countSpan.textContent = count;
         likeBtn.classList.remove('sunny');
-
-        card.classList.remove('normal-growth', 'small-growth', 'medium-growth', 'bloomed');
-        card.classList.add(getGrowthClass(count));
+        card.className = 'flower-card ' + getGrowthClass(count);
         card.querySelector('.flower-image').textContent = getPlantEmoji(count);
-
         showNotification(true);
       }
     });
 
-    // Delete button handler with fade-out and confirmation
     const deleteBtn = card.querySelector('.delete-btn');
     deleteBtn.addEventListener('click', async () => {
       if (!confirm('Are you sure you want to delete this message?')) return;
-
-      // Animate fade out
       card.classList.add('fade-out');
 
-      // Wait for fade-out transition before deleting
       card.addEventListener('transitionend', async () => {
         try {
           const res = await fetch(`${DATABASE_URL}/gratitudewall/${post.id}`, {
@@ -178,14 +174,13 @@ const renderPosts = (posts, container) => {
           });
 
           if (!res.ok) throw new Error('Failed to delete message');
-
           card.remove();
           showNotification(false, 'Message deleted successfully!');
           await loadStats();
         } catch (error) {
           console.error(error);
           showNotification(true, 'Failed to delete message.');
-          card.classList.remove('fade-out'); // revert animation on error
+          card.classList.remove('fade-out');
         }
       }, { once: true });
     });
@@ -194,7 +189,7 @@ const renderPosts = (posts, container) => {
   });
 };
 
-// Load all posts (Garden Wall)
+// 🪴 Load Functions
 async function loadPosts() {
   try {
     const res = await fetch(`${DATABASE_URL}/gratitudewall`);
@@ -206,7 +201,6 @@ async function loadPosts() {
   }
 }
 
-// Load new sprouts (recent posts)
 async function loadNewSprouts() {
   try {
     const res = await fetch(`${DATABASE_URL}/gratitudewall?limit=5&sort=desc`);
@@ -218,20 +212,30 @@ async function loadNewSprouts() {
   }
 }
 
-// Load garden stats (Growth Tracker)
 async function loadStats() {
   try {
     const res = await fetch(`${DATABASE_URL}/stats`);
     if (!res.ok) throw new Error('Failed to load stats');
     const stats = await res.json();
-    document.getElementById('msgCount').textContent = stats.messages;
-    document.getElementById('likeCount').textContent = stats.likes;
+
+    const msgCountEl = document.getElementById('msgCount');
+    const likeCountEl = document.getElementById('likeCount');
+    const trackerBox = document.getElementById('growth-tracker');
+
+    animateStatChange(msgCountEl, stats.messages);
+    animateStatChange(likeCountEl, stats.likes);
+
+    // Pulse box
+    trackerBox.classList.remove('tracker-pulse');
+    void trackerBox.offsetWidth;
+    trackerBox.classList.add('tracker-pulse');
+
   } catch (error) {
     console.error(error);
   }
 }
 
-// Initial load
+// 🚀 Initial Load
 loadPosts();
 loadNewSprouts();
 loadStats();
