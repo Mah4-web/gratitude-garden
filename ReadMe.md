@@ -74,6 +74,15 @@ Throughout Gratitude Garden’s development, I gained deep insights into full-st
 
 ---
 
+#### Lighthouse
+Tested and optimized site using Google Lighthouse for performance and accessibility improvements
+
+---
+#### Aria Labels
+Used Aria Labels
+
+---
+
 ### 🚧 Challenges I Faced
 
 * **Styling & Layout**
