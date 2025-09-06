@@ -94,14 +94,23 @@ const renderPosts = (posts, container) => {
     card.style.position = 'relative';
 
     // Format the created_at date nicely
-    const createdDate = new Date(post.created_at);
-    const formattedDate = createdDate.toLocaleString(undefined, {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+   const createdDate = new Date(post.created_at);
+console.log('Raw created_at:', post.created_at);
+console.log('Parsed date:', createdDate);
+
+if (isNaN(createdDate)) {
+  console.warn('Invalid date detected!');
+  // fallback or show "unknown date"
+  formattedDate = 'Unknown date';
+} else {
+  formattedDate = createdDate.toLocaleString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
 
     card.innerHTML = `
       <button class="delete-btn" data-id="${post.id}" title="Delete this message" aria-label="Delete message">✖️</button>
