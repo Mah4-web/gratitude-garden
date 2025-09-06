@@ -1,3 +1,5 @@
+
+// Imports
 import express from 'express';
 import cors from 'cors';
 import { db } from "./dbConnection.js";
@@ -12,7 +14,7 @@ app.listen(PORT, () => {
   console.log(`🌱 Server is running on port ${PORT}`);
 });
 
-// ✅ Enhanced GET all posts with sorting + limiting support
+// GET all posts with sorting
 app.get('/gratitudewall', async (req, res) => {
   const sort = req.query.sort === 'likes' ? 'likes DESC' : 'created_at DESC';
   const limit = req.query.limit ? parseInt(req.query.limit, 10) : null;
