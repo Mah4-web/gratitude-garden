@@ -17,10 +17,10 @@ const successMessages = [
 ];
 
 // Notification message
-function showNotification(isError = false) {
-  const message = isError 
+function showNotification(isError = false, customMessage = '') {
+  const message = customMessage || (isError 
     ? "❌ Something went wrong. Try again." 
-    : successMessages[Math.floor(Math.random() * successMessages.length)];
+    : successMessages[Math.floor(Math.random() * successMessages.length)]);
 
   notification.textContent = message;
   notification.classList.remove('hidden');
@@ -33,7 +33,6 @@ function showNotification(isError = false) {
     notification.classList.add('hidden');
   }, 3000);
 }
-
 
 // Handle form submission
 gratitudeForm.addEventListener('submit', async event => {
@@ -84,7 +83,6 @@ function getGrowthClass(likes) {
   return 'normal-growth';
 }
 
-// Render posts into a container
 const renderPosts = (posts, container) => {
   container.innerHTML = '';
   posts.forEach(post => {
@@ -92,17 +90,28 @@ const renderPosts = (posts, container) => {
 
     const card = document.createElement('article');
     card.classList.add('flower-card');
-
-    // Growth class based on likes
     card.classList.add(getGrowthClass(post.likes));
+    card.style.position = 'relative';
+
+    // Format the created_at date nicely
+    const createdDate = new Date(post.created_at);
+    const formattedDate = createdDate.toLocaleString(undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
 
     card.innerHTML = `
+      <button class="delete-btn" data-id="${post.id}" title="Delete this message" aria-label="Delete message">✖️</button>
       <div class="flower-image">${plantEmoji}</div>
       <div class="flower-top">
         <span class="emoji">${post.emoji || '🌱'}</span>
         <span class="name">${post.name}</span>
       </div>
       <p class="message">${post.message}</p>
+      <div class="date">${formattedDate}</div>
       <button class="like-btn" data-post="${post.id}" title="Click to spread some sunshine!">
         ☀️ Give Sunshine (<span class="like-count">${post.likes}</span>)
       </button>
@@ -121,8 +130,7 @@ const renderPosts = (posts, container) => {
 
       // Update growth class and plant emoji
       card.classList.remove('normal-growth', 'small-growth', 'medium-growth', 'bloomed');
-      const newGrowthClass = getGrowthClass(count);
-      card.classList.add(newGrowthClass);
+      card.classList.add(getGrowthClass(count));
       card.querySelector('.flower-image').textContent = getPlantEmoji(count);
 
       try {
@@ -137,13 +145,40 @@ const renderPosts = (posts, container) => {
         countSpan.textContent = count;
         likeBtn.classList.remove('sunny');
 
-        // Revert growth class and emoji
         card.classList.remove('normal-growth', 'small-growth', 'medium-growth', 'bloomed');
         card.classList.add(getGrowthClass(count));
         card.querySelector('.flower-image').textContent = getPlantEmoji(count);
 
         showNotification(true);
       }
+    });
+
+    // Delete button handler with fade-out and confirmation
+    const deleteBtn = card.querySelector('.delete-btn');
+    deleteBtn.addEventListener('click', async () => {
+      if (!confirm('Are you sure you want to delete this message?')) return;
+
+      // Animate fade out
+      card.classList.add('fade-out');
+
+      // Wait for fade-out transition before deleting
+      card.addEventListener('transitionend', async () => {
+        try {
+          const res = await fetch(`${DATABASE_URL}/gratitudewall/${post.id}`, {
+            method: 'DELETE',
+          });
+
+          if (!res.ok) throw new Error('Failed to delete message');
+
+          card.remove();
+          showNotification(false, 'Message deleted successfully!');
+          await loadStats();
+        } catch (error) {
+          console.error(error);
+          showNotification(true, 'Failed to delete message.');
+          card.classList.remove('fade-out'); // revert animation on error
+        }
+      }, { once: true });
     });
 
     container.appendChild(card);
@@ -165,7 +200,7 @@ async function loadPosts() {
 // Load new sprouts (recent posts)
 async function loadNewSprouts() {
   try {
-    const res = await fetch(`${DATABASE_URL}/gratitudewall?limit=5&sort=desc`); // Or your backend endpoint for recent posts
+    const res = await fetch(`${DATABASE_URL}/gratitudewall?limit=5&sort=desc`);
     if (!res.ok) throw new Error('Failed to load new sprouts');
     const posts = await res.json();
     renderPosts(posts, newSproutsContainer);
