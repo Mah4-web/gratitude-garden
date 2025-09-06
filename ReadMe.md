@@ -1,5 +1,7 @@
 
-# 🌻 Gratitude Garden — Reflection & Learning
+# 🌻 Gratitude Garden — A Public Appreciation Wall
+
+### Reflection & Learning
 
 ### 🪴 Overview
 
